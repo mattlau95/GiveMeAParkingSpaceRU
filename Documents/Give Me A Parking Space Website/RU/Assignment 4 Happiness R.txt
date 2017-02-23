@@ -1,0 +1,137 @@
+
+R version 3.3.2 (2016-10-31) -- "Sincere Pumpkin Patch"
+Copyright (C) 2016 The R Foundation for Statistical Computing
+Platform: x86_64-apple-darwin13.4.0 (64-bit)
+
+R is free software and comes with ABSOLUTELY NO WARRANTY.
+You are welcome to redistribute it under certain conditions.
+Type 'license()' or 'licence()' for distribution details.
+
+  Natural language support but running in an English locale
+
+R is a collaborative project with many contributors.
+Type 'contributors()' for more information and
+'citation()' on how to cite R or R packages in publications.
+
+Type 'demo()' for some demos, 'help()' for on-line help, or
+'help.start()' for an HTML browser interface to help.
+Type 'q()' to quit R.
+
+> library(readr)
+> HAPPINESS2017 <- read_csv("~/Downloads/HAPPINESS2017.csv")
+Parsed with column specification:
+cols(
+  IDN = col_integer(),
+  AGE = col_integer(),
+  COUNTRY = col_character(),
+  GENDER = col_character(),
+  IMMIGRANT = col_integer(),
+  INCOME = col_integer(),
+  HAPPINESS = col_double()
+)
+> View(HAPPINESS2017)
+> HAPPINESS2017[,8] <- ""
+Warning messages:
+1: In doTryCatch(return(expr), name, parentenv, handler) :
+  display list redraw incomplete
+2: In doTryCatch(return(expr), name, parentenv, handler) :
+  invalid graphics state
+3: In doTryCatch(return(expr), name, parentenv, handler) :
+  invalid graphics state
+> colnames(HAPPINESS2017)[8] <- "IMMIGRANT - YES/NO"
+> View(HAPPINESS2017)
+> HAPPINESS2017[HAPPINESS2017$IMMIGRANT == 1, 8] = "YES"
+> View(HAPPINESS2017)
+> HAPPINESS2017[HAPPINESS2017$`IMMIGRANT - YES/NO` != "YES", 8] = "NO"
+> View(HAPPINESS2017)
+> h.USonly <- subset(HAPPINESS2017, COUNTRY == 'United States')
+> HappinessInUSImmigrantMean <- tapply(h.USonly$HAPPINESS, h.USonly$`IMMIGRANT - YES/NO`, mean)
+> text(bp,0,round(HappinessInUSImmigrantMean, 1), cex=1, pos=3)
+> bp <- barplot(HappinessInUSImmigrantMean, main = "Average Happiness Rate Among Immigrants in the US", font.main = 4, col.main = "blue", xlab = "Immigrant?", ylab = "Mean Happiness", ylim=c(0,10),col = c("mistyrose","lavender"))
+> text(bp,0,round(HappinessInUSImmigrantMean, 2), cex=1, pos=3)
+> bpSudanH <- barplot(HappinessInSudan, main = "Average Happiness Rate vs. Gender (Sudan)", font.main = 4, col.main = "blue", xlab = "Gender", ylab = "Average Happiness Rate", ylim=c(0,10), col = c("mistyrose","lavender"))
+> text(bpSudanH,0,round(IncomeInSudan, 2), cex=1, pos=3)
+> bpSudanH <- barplot(HappinessInSudan, main = "Average Happiness Rate vs. Gender (Sudan)", font.main = 4, col.main = "blue", xlab = "Gender", ylab = "Average Happiness Rate", ylim=c(0,10), col = c("mistyrose","lavender"))
+
+> plot(HAPPINESS2017$INCOME, HAPPINESS2017$HAPPINESS)
+> plot(h.USexcl$INCOME, h.USexcl$HAPPINESS, main = "Income vs. Happiness exlcuding the US", xlab="Income", ylab = "Happiness Rating")
+> plot(h.USonly$INCOME, h.USonly$HAPPINESS, main = "Income vs. Happiness only in the US", xlab="Income", ylab = "Happiness Rating")
+> plot(HAPPINESS2017$AGE, HAPPINESS2017$HAPPINESS, col = ifelse(HAPPINESS2017$GENDER=="Male", "red", "blue"))
+Error in plot.new() : figure margins too large
+In addition: Warning messages:
+1: In doTryCatch(return(expr), name, parentenv, handler) :
+  display list redraw incomplete
+2: In doTryCatch(return(expr), name, parentenv, handler) :
+  invalid graphics state
+3: In doTryCatch(return(expr), name, parentenv, handler) :
+  invalid graphics state
+4: In doTryCatch(return(expr), name, parentenv, handler) :
+  display list redraw incomplete
+5: In doTryCatch(return(expr), name, parentenv, handler) :
+  invalid graphics state
+6: In doTryCatch(return(expr), name, parentenv, handler) :
+  invalid graphics state
+7: In doTryCatch(return(expr), name, parentenv, handler) :
+  display list redraw incomplete
+8: In doTryCatch(return(expr), name, parentenv, handler) :
+  invalid graphics state
+9: In doTryCatch(return(expr), name, parentenv, handler) :
+  invalid graphics state
+> plot(HAPPINESS2017$AGE, HAPPINESS2017$HAPPINESS, pch=2, col = ifelse(HAPPINESS2017$GENDER=="Male", "red", "blue"))
+> plot(h.USonly$AGE, h.USonly$HAPPINESS, pch=2, col = ifelse(h.USonly$GENDER=="Male", "red", "blue"))
+> plot(h.USexcl$AGE, h.USexcl$HAPPINESS, pch=2, col = ifelse(h.USexcl$GENDER=="Male", "red", "blue"))
+> plot(h.USonly$AGE, h.USonly$HAPPINESS, main="Age vs. Happiness Among Genders", pch=2, xlab="Age", ylab="Happiness" col = ifelse(h.USonly$GENDER=="Male", "red", "blue"))
+Error: unexpected symbol in "plot(h.USonly$AGE, h.USonly$HAPPINESS, main="Age vs. Happiness Among Genders", pch=2, xlab="Age", ylab="Happiness" col"
+> plot(h.USonly$AGE, h.USonly$HAPPINESS, main="Age vs. Happiness Among Genders", pch=2, xlab="Age", ylab="Happiness", col = ifelse(h.USonly$GENDER=="Male", "red", "blue"))
+> legend(80, 75, pch=c(2,2), col=c(“red”, “blue”), c(“Male”, “Female”), bty=”o”,  box.col=”darkgreen”, cex=.8)
+Error: unexpected input in "legend(80, 75, pch=c(2,2), col=c(�"
+> legend(80,75, pch=c(2,2), col=c("red","blue"), c("Male","Female"), bty="o", box.col="darkgreen",cex=.8)
+Error in strwidth(legend, units = "user", cex = cex, font = text.font) : 
+  invalid graphics state
+In addition: Warning messages:
+1: In doTryCatch(return(expr), name, parentenv, handler) :
+  display list redraw incomplete
+2: In doTryCatch(return(expr), name, parentenv, handler) :
+  invalid graphics state
+3: In doTryCatch(return(expr), name, parentenv, handler) :
+  invalid graphics state
+> plot(h.USonly$AGE, h.USonly$HAPPINESS, main="Age vs. Happiness Among Genders", pch=2, xlab="Age", ylab="Happiness", col = ifelse(h.USonly$GENDER=="Male", "red", "blue"))
+Error in plot.new() : figure margins too large
+> plot(h.USonly$AGE, h.USonly$HAPPINESS, main="Age vs. Happiness Among Genders", pch=2, xlab="Age", ylab="Happiness", col = ifelse(h.USonly$GENDER=="Male", "red", "blue"))
+> legend(80, 75, pch=c(2,2), col=c("red","blue"), c("Male","Female"), bty="o", box.col="darkgreen",cex=.8)
+> legend(80, 75, pch=c(2,2), col=c("red","blue"), c("Male","Female"), bty="o", box.col="darkgreen",cex=.8)
+> legend(0,0, pch=c(2,2), col=c("red","blue"), c("Male","Female"), bty="o", box.col="darkgreen",cex=.8)
+> View(xx)
+> View(HAPPINESS2017)
+> h.Syriaonly <- subset(HAPPINESS2017, COUNTRY == 'Syria')
+> plot(h.Syriaonly$AGE, h.Syriaonly$HAPPINESS, main="Age vs. Happiness Among Genders", pch=2, xlab="Age", ylab="Happiness", col = ifelse(h.Syriaonly$GENDER=="Male", "red", "blue"))
+> plot(h.Syriaonly$AGE, h.Syriaonly$HAPPINESS, main="Age vs. Happiness Among Genders (Syria)", pch=2, xlab="Age", ylab="Happiness", col = ifelse(h.Syriaonly$GENDER=="Male", "red", "blue"))
+> plot(h.USonly$AGE, h.USonly$HAPPINESS, main="Age vs. Happiness Among Genders (United States)", pch=2, xlab="Age", ylab="Happiness", col = ifelse(h.USonly$GENDER=="Male", "red", "blue"))
+> h.Chinaonly <- subset(HAPPINESS2017, COUNTRY == 'China')
+> plot(h.Chinaonly$AGE, h.Chinaonly$HAPPINESS, main="Age vs. Happiness Among Genders (China)", pch=2, xlab="Age", ylab="Happiness", col = ifelse(h.Chinaonly$GENDER=="Male", "red", "blue"))
+> h.Sudanonly <- subset(HAPPINESS2017, COUNTRY == 'Sudan')
+> plot(h.Sudanonly$AGE, h.Sudanonly$HAPPINESS, main="Age vs. Happiness Among Genders (Sudan)", pch=2, xlab="Age", ylab="Happiness", col = ifelse(h.Sudanonly$GENDER=="Male", "red", "blue"))
+> plot(h.Sudanonly$AGE, h.Sudanonly$INCOME, main="Age vs. Income Among Genders (Sudan)", pch=2, xlab="Age", ylab="Happiness", col = ifelse(h.Sudanonly$GENDER=="Male", "red", "blue"))
+> plot(h.Chinaonly$AGE, h.Chinaonly$HAPPINESS, main="Age vs. Happiness Among Genders (China)", pch=2, xlab="Age", ylab="Happiness", col = ifelse(h.Chinaonly$GENDER=="Male", "red", "blue"))
+> IncomeInSudan <- tapply(h.Sudanonly$INCOME, h.Sudanonly$GENDER, mean)
+
+
+> text(bpSudanH,0,round(HappinessInSudan, 2), cex=1, pos=3)
+> HappinessInUSGender <- tapply(h.USonly$HAPPINESS, h.USonly$GENDER, mean)
+> bpUSH <- barplot(HappinessInUSGender, main = "Average Happiness Rate vs. Gender (US)", font.main = 4, col.main = "blue", xlab = "Gender", ylab = "Average Happiness Rate", ylim=c(0,10), col = c("mistyrose","lavender"))
+> text(bpUSH,0,round(HappinessInUSGender, 2), cex=1, pos=3)
+> IncomeInUSGender <- tapply(h.USonly$INCOME, h.USonly$GENDER, mean)
+> bpUSIncome <- barplot(IncomeInUSGender, main = "Average Income vs. Gender (US)", font.main = 4, col.main = "blue", xlab = "Gender", ylab = "Average Income ($)", ylim=c(0,80000), col = c("mistyrose","lavender"))
+> text(bpUSIncome,0,round(IncomeInUSGender, 2), cex=1, pos=3)
+> IncomeGender <- tapply(HAPPINESS2017$INCOME, HAPPINESS2017$GENDER, mean)
+> HappinessGender <- tapply(HAPPINESS2017$HAPPINESS, HAPPINESS2017$GENDER, mean)
+> bpALLHapp <- barplot(HappinessGender, main = "Average Happiness Rate vs. Gender (All Countries)", font.main = 4, col.main = "blue", xlab = "Gender", ylab = "Average Happiness Rate", ylim=c(0,10), col = c("mistyrose","lavender"))
+> text(bpALLHapp,0,round(HappinessGender, 2), cex=1, pos=3)
+> bpALLIncome <- barplot(IncomeGender, main = "Average Income vs. Gender (All Countries)", font.main = 4, col.main = "blue", xlab = "Gender", ylab = "Average Income ($)", ylim=c(0,80000), col = c("mistyrose","lavender"))
+> text(bpALLIncome,0,round(IncomeGender, 2), cex=1, pos=3)
+> HappinessInSyria <- tapply(h.Syriaonly$HAPPINESS, h.Syriaonly$GENDER, mean)
+> IncomeInSyria <- tapply(h.Syriaonly$INCOME, h.Syriaonly$GENDER, mean)
+> bpSyriaIncome <- barplot(IncomeInSyria, main = "Average Income vs. Gender (Syria)", font.main = 4, col.main = "blue", xlab = "Gender", ylab = "Average Income ($)", ylim=c(0,80000), col = c("mistyrose","lavender"))
+> text(bpSyriaIncome,0,round(IncomeInSyria, 2), cex=1, pos=3)
+> bpSyriaHapp <- barplot(HappinessInSyria, main = "Average Happiness Rate vs. Gender (Syria)", font.main = 4, col.main = "blue", xlab = "Gender", ylab = "Average Happiness Rate", ylim=c(0,10), col = c("mistyrose","lavender"))
+> text(bpSyriaHapp,0,round(HappinessInSyria, 2), cex=1, pos=3)

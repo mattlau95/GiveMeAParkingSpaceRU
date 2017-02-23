@@ -1,0 +1,93 @@
+MATTHEW LAU 
+Data 101
+Assignment 3 R Code
+7 February 2017
+
+NOTE: I did not bother including code where I messed up!
+
+
+R version 3.3.2 (2016-10-31) -- "Sincere Pumpkin Patch"
+Copyright (C) 2016 The R Foundation for Statistical Computing
+Platform: x86_64-apple-darwin13.4.0 (64-bit)
+
+R is free software and comes with ABSOLUTELY NO WARRANTY.
+You are welcome to redistribute it under certain conditions.
+Type 'license()' or 'licence()' for distribution details.
+
+  Natural language support but running in an English locale
+
+R is a collaborative project with many contributors.
+Type 'contributors()' for more information and
+'citation()' on how to cite R or R packages in publications.
+
+Type 'demo()' for some demos, 'help()' for on-line help, or
+'help.start()' for an HTML browser interface to help.
+Type 'q()' to quit R.
+
+> library(readr)
+> CENSUSNEW <- read_csv("~/Downloads/CENSUSNEW.csv")
+Parsed with column specification:
+cols(
+  AGE = col_integer(),
+  STATUS = col_character(),
+  EDUCATION = col_character(),
+  YEARS = col_integer(),
+  PROFESSION = col_character(),
+  CAPITALGAINS = col_integer(),
+  CAPITALLOSS = col_integer(),
+  NATIVE = col_character(),
+  ELEMENTS = col_character()
+)
+> View(CENSUSNEW)
+> census.exceptUS<-subset(CENSUSNEW, NATIVE!="United-States")
+> Execs<-subset(census.exceptUS,PROFESSION=="Exec-managerial")
+> ExecsByNative = table(Execs$PROFESSION,Execs$NATIVE)
+> barplot(ExecsByNative, main = "Number of Execs vs Native Country Excluding US", col=3, ylab = "Number of Execs", xlab="Native Country", las=2, cex.names = 0.75)
+> census.onlyUS<-subset(CENSUSNEW, NATIVE=="United-States")
+> EducationWithinUS = table(census.onlyUS$EDUCATION)
+> barplot(EducationWithinUS, main="Education in the US")
+> census.averageAge<-tapply(CENSUSNEW$AGE,CENSUSNEW$NATIVE,mean)
+> print.table(census.averageAge)
+                         ?                   Cambodia 
+                  39.28237                   38.11111 
+                    Canada                      China 
+                  43.51304                   42.45946 
+                  Columbia                       Cuba 
+                  39.87719                   45.31579 
+        Dominican-Republic                    Ecuador 
+                  37.30435                   35.85714 
+               El-Salvador                    England 
+                  35.18947                   41.97647 
+                    France                    Germany 
+                  39.28571                   39.71756 
+                    Greece                  Guatemala 
+                  45.96552                   32.93103 
+                     Haiti         Holand-Netherlands 
+                  39.14634                   31.00000 
+                  Honduras                       Hong 
+                  36.72727                   33.84211 
+                   Hungary                      India 
+                  49.00000                   42.72727 
+                      Iran                    Ireland 
+                  39.20930                   35.54167 
+                     Italy                    Jamaica 
+                  46.88732                   35.30380 
+                     Japan                       Laos 
+                  38.38333                   35.93750 
+                    Mexico                  Nicaragua 
+                  33.62771                   36.10714 
+Outlying-US(Guam-USVI-etc)                       Peru 
+                  38.14286                   37.03704 
+               Philippines                     Poland 
+                  39.63351                   43.00000 
+                  Portugal                Puerto-Rico 
+                  40.38889                   41.20370 
+                  Scotland                      South 
+                  42.00000                   39.92000 
+                    Taiwan                   Thailand 
+                  34.06000                   36.93750 
+           Trinadad&Tobago              United-States 
+                  42.11111                   40.14404 
+                   Vietnam                 Yugoslavia 
+                  34.67742                   39.46667 
+> barplot(census.averageAge, main="Average Age by Native Country", ylab="Average Age", xlab="Native Country")
